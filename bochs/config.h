@@ -172,7 +172,7 @@
 // members of the C++ CPU class to be static.
 // This defaults to 1 since it should improve performance, but when
 // SMP mode is enabled, it will be turned off by configure.
-#define BX_USE_CPU_SMF 1
+#define BX_USE_CPU_SMF 0
 
 #define BX_USE_MEM_SMF 1
 
@@ -710,7 +710,7 @@ typedef Bit32u bx_phy_address;
 //  * processors=2, bootstrap=0, ioapic_id=2
 //  * processors=4, bootstrap=0, ioapic_id=4
 //  * processors=8, bootstrap=0, ioapic_id=8
-#define BX_SUPPORT_SMP         0
+#define BX_SUPPORT_SMP         1
 #define BX_BOOTSTRAP_PROCESSOR 0
 
 // For P6 and Pentium family processors the local APIC ID feild is 4 bits
