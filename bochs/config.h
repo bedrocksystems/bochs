@@ -115,10 +115,10 @@
 
 // CPU level emulation. Default level is set in the configure script.
 // BX_CPU_LEVEL defines the CPU level to emulate.
-#define BX_CPU_LEVEL 0
+#define BX_CPU_LEVEL 6
 
 // emulate x86-64 instruction set?
-#define BX_SUPPORT_X86_64 0
+#define BX_SUPPORT_X86_64 1
 
 // emulate long physical address (>32 bit)
 #define BX_PHY_ADDRESS_LONG 0
@@ -629,7 +629,7 @@ typedef Bit32u bx_phy_address;
 #define BX_ENABLE_STATISTICS 0
 
 #define BX_SUPPORT_ALIGNMENT_CHECK 0
-#define BX_SUPPORT_FPU 0
+#define BX_SUPPORT_FPU 1
 #define BX_SUPPORT_3DNOW 0
 #define BX_SUPPORT_PKEYS 0
 #define BX_SUPPORT_CET 0
