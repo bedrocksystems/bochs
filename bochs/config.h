@@ -121,7 +121,7 @@
 #define BX_SUPPORT_X86_64 1
 
 // emulate long physical address (>32 bit)
-#define BX_PHY_ADDRESS_LONG 0
+#define BX_PHY_ADDRESS_LONG 1
 
 #define BX_HAVE_SLEEP 0
 #define BX_HAVE_MSLEEP 0
