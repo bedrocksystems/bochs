@@ -633,7 +633,7 @@ typedef Bit32u bx_phy_address;
 #define BX_SUPPORT_3DNOW 0
 #define BX_SUPPORT_PKEYS 0
 #define BX_SUPPORT_CET 0
-#define BX_SUPPORT_MONITOR_MWAIT 0
+#define BX_SUPPORT_MONITOR_MWAIT 1
 #define BX_SUPPORT_PERFMON 0
 #define BX_SUPPORT_MEMTYPE 0
 #define BX_SUPPORT_SVM 0
