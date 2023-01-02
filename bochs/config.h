@@ -128,7 +128,10 @@
 #define BX_HAVE_USLEEP 0
 #define BX_HAVE_NANOSLEEP 0
 #define BX_HAVE_ABORT 0
-#define BX_HAVE_SOCKLEN_T 0
+// We don't have sockets, but, we won't need them and we don't want
+// bochs to start declaring them for us (that might conflict with other
+// includes - esp. when compiling unit tests for linux)
+#define BX_HAVE_SOCKLEN_T 1
 #define BX_HAVE_SOCKADDR_IN_SIN_LEN 0
 #define BX_HAVE_GETTIMEOFDAY 0
 #if defined(WIN32)
