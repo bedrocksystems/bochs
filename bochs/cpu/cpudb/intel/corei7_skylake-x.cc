@@ -771,6 +771,6 @@ void corei7_skylake_x_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0x16, 0x8);
 }
 
-bx_cpuid_t *create_corei7_skylake_x_cpuid(BX_CPU_C *cpu) { return new corei7_skylake_x_t(cpu); }
+bx_cpuid_t *create_corei7_skylake_x_cpuid(BX_CPU_C *cpu) { return new (nothrow) corei7_skylake_x_t(cpu); }
 
 #endif

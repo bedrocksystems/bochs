@@ -517,6 +517,6 @@ void core_duo_t2400_yonah_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0xA, 0x8);
 }
 
-bx_cpuid_t *create_core_duo_t2400_yonah_cpuid(BX_CPU_C *cpu) { return new core_duo_t2400_yonah_t(cpu); }
+bx_cpuid_t *create_core_duo_t2400_yonah_cpuid(BX_CPU_C *cpu) { return new (nothrow) core_duo_t2400_yonah_t(cpu); }
 
 #endif

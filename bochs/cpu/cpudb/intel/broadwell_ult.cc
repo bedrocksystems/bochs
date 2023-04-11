@@ -726,6 +726,6 @@ void broadwell_ult_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0x14, 0x8);
 }
 
-bx_cpuid_t *create_broadwell_ult_cpuid(BX_CPU_C *cpu) { return new broadwell_ult_t(cpu); }
+bx_cpuid_t *create_broadwell_ult_cpuid(BX_CPU_C *cpu) { return new (nothrow) broadwell_ult_t(cpu); }
 
 #endif

@@ -152,36 +152,36 @@ void BX_CPU_C::initialize(void)
 void BX_CPU_C::init_statistics(void)
 {
 #if InstrumentCPU
-  stats = new bx_cpu_statistics;
+  stats = new (nothrow) bx_cpu_statistics;
 
-  bx_list_c *cpu = new bx_list_c(SIM->get_statistics_root(), get_name(), get_name());
+  bx_list_c *cpu = new (nothrow) bx_list_c(SIM->get_statistics_root(), get_name(), get_name());
 
 #if InstrumentICACHE
-  new bx_shadow_num_c(cpu, "iCacheLookups", &stats->iCacheLookups);
-  new bx_shadow_num_c(cpu, "iCachePrefetch", &stats->iCachePrefetch);
-  new bx_shadow_num_c(cpu, "iCacheMisses", &stats->iCacheMisses);
+  new (nothrow) bx_shadow_num_c(cpu, "iCacheLookups", &stats->iCacheLookups);
+  new (nothrow) bx_shadow_num_c(cpu, "iCachePrefetch", &stats->iCachePrefetch);
+  new (nothrow) bx_shadow_num_c(cpu, "iCacheMisses", &stats->iCacheMisses);
 #endif
 
 #if InstrumentTLB
-  new bx_shadow_num_c(cpu, "tlbLookups", &stats->tlbLookups);
-  new bx_shadow_num_c(cpu, "tlbExecuteLookups", &stats->tlbExecuteLookups);
-  new bx_shadow_num_c(cpu, "tlbWriteLookups", &stats->tlbWriteLookups);
-  new bx_shadow_num_c(cpu, "tlbMisses", &stats->tlbMisses);
-  new bx_shadow_num_c(cpu, "tlbExecuteMisses", &stats->tlbExecuteMisses);
-  new bx_shadow_num_c(cpu, "tlbWriteMisses", &stats->tlbWriteMisses);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbLookups", &stats->tlbLookups);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbExecuteLookups", &stats->tlbExecuteLookups);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbWriteLookups", &stats->tlbWriteLookups);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbMisses", &stats->tlbMisses);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbExecuteMisses", &stats->tlbExecuteMisses);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbWriteMisses", &stats->tlbWriteMisses);
 #endif
 
 #if InstrumentTLBFlush
-  new bx_shadow_num_c(cpu, "tlbGlobalFlushes", &stats->tlbGlobalFlushes);
-  new bx_shadow_num_c(cpu, "tlbNonGlobalFlushes", &stats->tlbNonGlobalFlushes);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbGlobalFlushes", &stats->tlbGlobalFlushes);
+  new (nothrow) bx_shadow_num_c(cpu, "tlbNonGlobalFlushes", &stats->tlbNonGlobalFlushes);
 #endif
 
 #if InstrumentStackPrefetch
-  new bx_shadow_num_c(cpu, "stackPrefetch", &stats->stackPrefetch);
+  new (nothrow) bx_shadow_num_c(cpu, "stackPrefetch", &stats->stackPrefetch);
 #endif
 
 #if InstrumentSMC
-  new bx_shadow_num_c(cpu, "smc", &stats->smc);
+  new (nothrow) bx_shadow_num_c(cpu, "smc", &stats->smc);
 #endif
 
 #endif
@@ -195,11 +195,11 @@ void BX_CPU_C::register_state(void)
 
   sprintf(name, "cpu%d", BX_CPU_ID);
 
-  bx_list_c *cpu = new bx_list_c(SIM->get_bochs_root(), name, name);
+  bx_list_c *cpu = new (nothrow) bx_list_c(SIM->get_bochs_root(), name, name);
 
   for (n=0;n<BX_ISA_EXTENSIONS_ARRAY_SIZE;n++) {
     sprintf(name, "ia_extensions_bitmask_%u", n);
-    new bx_shadow_num_c(cpu, name, &ia_extensions_bitmask[n], BASE_HEX);
+    new (nothrow) bx_shadow_num_c(cpu, name, &ia_extensions_bitmask[n], BASE_HEX);
   }
 
 #if BX_SUPPORT_VMX
@@ -290,7 +290,7 @@ void BX_CPU_C::register_state(void)
 
   for(n=0; n<6; n++) {
     bx_segment_reg_t *segment = &BX_CPU_THIS_PTR sregs[n];
-    bx_list_c *sreg = new bx_list_c(cpu, strseg(segment));
+    bx_list_c *sreg = new (nothrow) bx_list_c(cpu, strseg(segment));
     BXRS_PARAM_SPECIAL16(sreg, selector,
            param_save_handler, param_restore_handler);
     BXRS_HEX_PARAM_FIELD(sreg, valid, segment->cache.valid);
@@ -308,15 +308,15 @@ void BX_CPU_C::register_state(void)
     BXRS_PARAM_BOOL(sreg, avl, segment->cache.u.segment.avl);
   }
 
-  bx_list_c *GDTR = new bx_list_c(cpu, "GDTR");
+  bx_list_c *GDTR = new (nothrow) bx_list_c(cpu, "GDTR");
   BXRS_HEX_PARAM_FIELD(GDTR, base, gdtr.base);
   BXRS_HEX_PARAM_FIELD(GDTR, limit, gdtr.limit);
 
-  bx_list_c *IDTR = new bx_list_c(cpu, "IDTR");
+  bx_list_c *IDTR = new (nothrow) bx_list_c(cpu, "IDTR");
   BXRS_HEX_PARAM_FIELD(IDTR, base, idtr.base);
   BXRS_HEX_PARAM_FIELD(IDTR, limit, idtr.limit);
 
-  bx_list_c *LDTR = new bx_list_c(cpu, "LDTR");
+  bx_list_c *LDTR = new (nothrow) bx_list_c(cpu, "LDTR");
   BXRS_PARAM_SPECIAL16(LDTR, selector, param_save_handler, param_restore_handler);
   BXRS_HEX_PARAM_FIELD(LDTR, valid, ldtr.cache.valid);
   BXRS_PARAM_BOOL(LDTR, p, ldtr.cache.p);
@@ -329,7 +329,7 @@ void BX_CPU_C::register_state(void)
   BXRS_PARAM_BOOL(LDTR, d_b, ldtr.cache.u.segment.d_b);
   BXRS_PARAM_BOOL(LDTR, avl, ldtr.cache.u.segment.avl);
 
-  bx_list_c *TR = new bx_list_c(cpu, "TR");
+  bx_list_c *TR = new (nothrow) bx_list_c(cpu, "TR");
   BXRS_PARAM_SPECIAL16(TR, selector, param_save_handler, param_restore_handler);
   BXRS_HEX_PARAM_FIELD(TR, valid, tr.cache.valid);
   BXRS_PARAM_BOOL(TR, p, tr.cache.p);
@@ -345,7 +345,7 @@ void BX_CPU_C::register_state(void)
   BXRS_HEX_PARAM_SIMPLE(cpu, smbase);
 
 #if BX_CPU_LEVEL >= 6
-  bx_list_c *PDPTRS = new bx_list_c(cpu, "PDPTR_CACHE");
+  bx_list_c *PDPTRS = new (nothrow) bx_list_c(cpu, "PDPTR_CACHE");
   BXRS_HEX_PARAM_FIELD(PDPTRS, entry0, PDPTR_CACHE.entry[0]);
   BXRS_HEX_PARAM_FIELD(PDPTRS, entry1, PDPTR_CACHE.entry[1]);
   BXRS_HEX_PARAM_FIELD(PDPTRS, entry2, PDPTR_CACHE.entry[2]);
@@ -353,7 +353,7 @@ void BX_CPU_C::register_state(void)
 #endif
 
 #if BX_CPU_LEVEL >= 5
-  bx_list_c *MSR = new bx_list_c(cpu, "MSR");
+  bx_list_c *MSR = new (nothrow) bx_list_c(cpu, "MSR");
 
 #if BX_SUPPORT_APIC
   BXRS_HEX_PARAM_FIELD(MSR, apicbase, msr.apicbase);
@@ -429,11 +429,11 @@ void BX_CPU_C::register_state(void)
 #endif
 
 #if BX_CONFIGURE_MSRS
-  bx_list_c *MSRS = new bx_list_c(cpu, "USER_MSR");
+  bx_list_c *MSRS = new (nothrow) bx_list_c(cpu, "USER_MSR");
   for(n=0; n < BX_MSR_MAX_INDEX; n++) {
     if (! msrs[n]) continue;
     sprintf(name, "msr_0x%03x", n);
-    bx_list_c *m = new bx_list_c(MSRS, name);
+    bx_list_c *m = new (nothrow) bx_list_c(MSRS, name);
     BXRS_HEX_PARAM_FIELD(m, index, msrs[n]->index);
     BXRS_DEC_PARAM_FIELD(m, type, msrs[n]->type);
     BXRS_HEX_PARAM_FIELD(m, val64, msrs[n]->val64);
@@ -445,7 +445,7 @@ void BX_CPU_C::register_state(void)
 #endif
 
 #if BX_SUPPORT_FPU
-  bx_list_c *fpu = new bx_list_c(cpu, "FPU");
+  bx_list_c *fpu = new (nothrow) bx_list_c(cpu, "FPU");
   BXRS_HEX_PARAM_FIELD(fpu, cwd, the_i387.cwd);
   BXRS_HEX_PARAM_FIELD(fpu, swd, the_i387.swd);
   BXRS_HEX_PARAM_FIELD(fpu, twd, the_i387.twd);
@@ -456,7 +456,7 @@ void BX_CPU_C::register_state(void)
   BXRS_HEX_PARAM_FIELD(fpu, fdp, the_i387.fdp);
   for (n=0; n<8; n++) {
     sprintf(name, "st%d", n);
-    bx_list_c *STx = new bx_list_c(fpu, name);
+    bx_list_c *STx = new (nothrow) bx_list_c(fpu, name);
     BXRS_HEX_PARAM_FIELD(STx, exp,      the_i387.st_space[n].exp);
     BXRS_HEX_PARAM_FIELD(STx, fraction, the_i387.st_space[n].fraction);
   }
@@ -465,28 +465,28 @@ void BX_CPU_C::register_state(void)
 
 #if BX_CPU_LEVEL >= 6
   if (BX_CPUID_SUPPORT_ISA_EXTENSION(BX_ISA_SSE)) {
-    bx_list_c *sse = new bx_list_c(cpu, "SSE");
+    bx_list_c *sse = new (nothrow) bx_list_c(cpu, "SSE");
     BXRS_HEX_PARAM_FIELD(sse, mxcsr, mxcsr.mxcsr);
     for (n=0; n<BX_XMM_REGISTERS; n++) {
       for(unsigned j=0;j < BX_VLMAX*2;j++) {
         sprintf(name, "xmm%02d_%d", n, j);
-        new bx_shadow_num_c(sse, name, &vmm[n].vmm64u(j), BASE_HEX);
+        new (nothrow) bx_shadow_num_c(sse, name, &vmm[n].vmm64u(j), BASE_HEX);
       }
     }
   }
 #if BX_SUPPORT_EVEX
   if (BX_CPUID_SUPPORT_ISA_EXTENSION(BX_ISA_AVX512)) {
-    bx_list_c *mask = new bx_list_c(cpu, "OPMASK");
+    bx_list_c *mask = new (nothrow) bx_list_c(cpu, "OPMASK");
     for (n=0; n<8; n++) {
       sprintf(name, "k%d", n);
-      new bx_shadow_num_c(mask, name, &opmask[n].rrx, BASE_HEX);
+      new (nothrow) bx_shadow_num_c(mask, name, &opmask[n].rrx, BASE_HEX);
     }
   }
 #endif
 #endif // BX_CPU_LEVEL >= 6
 
 #if BX_SUPPORT_MONITOR_MWAIT
-  bx_list_c *monitor_list = new bx_list_c(cpu, "MONITOR");
+  bx_list_c *monitor_list = new (nothrow) bx_list_c(cpu, "MONITOR");
   BXRS_HEX_PARAM_FIELD(monitor_list, monitor_addr, monitor.monitor_addr);
   BXRS_PARAM_BOOL(monitor_list, armed, monitor.armed);
 #endif
@@ -514,13 +514,13 @@ void BX_CPU_C::register_state(void)
   BXRS_PARAM_BOOL(cpu, in_smm, in_smm);
 
 #if BX_DEBUGGER
-  bx_list_c *dtlb = new bx_list_c(cpu, "DTLB");
+  bx_list_c *dtlb = new (nothrow) bx_list_c(cpu, "DTLB");
 #if BX_CPU_LEVEL >= 5
   BXRS_PARAM_BOOL(dtlb, split_large, DTLB.split_large);
 #endif
   for (n=0; n<BX_DTLB_SIZE; n++) {
     sprintf(name, "entry%u", n);
-    bx_list_c *tlb_entry = new bx_list_c(dtlb, name);
+    bx_list_c *tlb_entry = new (nothrow) bx_list_c(dtlb, name);
     BXRS_HEX_PARAM_FIELD(tlb_entry, lpf, DTLB.entry[n].lpf);
     BXRS_HEX_PARAM_FIELD(tlb_entry, lpf_mask, DTLB.entry[n].lpf_mask);
     BXRS_HEX_PARAM_FIELD(tlb_entry, ppf, DTLB.entry[n].ppf);
@@ -533,13 +533,13 @@ void BX_CPU_C::register_state(void)
 #endif
   }
 
-  bx_list_c *itlb = new bx_list_c(cpu, "ITLB");
+  bx_list_c *itlb = new (nothrow) bx_list_c(cpu, "ITLB");
 #if BX_CPU_LEVEL >= 5
   BXRS_PARAM_BOOL(itlb, split_large, ITLB.split_large);
 #endif
   for (n=0; n<BX_ITLB_SIZE; n++) {
     sprintf(name, "entry%u", n);
-    bx_list_c *tlb_entry = new bx_list_c(itlb, name);
+    bx_list_c *tlb_entry = new (nothrow) bx_list_c(itlb, name);
     BXRS_HEX_PARAM_FIELD(tlb_entry, lpf, ITLB.entry[n].lpf);
     BXRS_HEX_PARAM_FIELD(tlb_entry, lpf_mask, ITLB.entry[n].lpf_mask);
     BXRS_HEX_PARAM_FIELD(tlb_entry, ppf, ITLB.entry[n].ppf);
