@@ -303,6 +303,7 @@
 #define BX_WITH_SDL 0
 #define BX_WITH_SDL2 0
 #define BX_WITH_WX 0
+#define BX_NO_HOST_FPU 1
 
 // BX_USE_TEXTCONFIG should be set to 1 unless Bochs is compiled
 // for wxWidgets only.
