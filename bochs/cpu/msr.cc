@@ -1578,7 +1578,7 @@ int BX_CPU_C::load_MSRs(const char *file)
       BX_INFO(("loaded MSR[0x%03x] type=%d %08x:%08x %08x:%08x %08x:%08x", index, type,
         reset_hi, reset_lo, rsrv_hi, rsrv_lo, ignr_hi, ignr_lo));
 
-      BX_CPU_THIS_PTR msrs[index] = new MSR(index, type,
+      BX_CPU_THIS_PTR msrs[index] = new (nothrow) MSR(index, type,
         GET64_FROM_HI32_LO32(reset_hi, reset_lo),
         GET64_FROM_HI32_LO32(rsrv_hi, rsrv_lo),
         GET64_FROM_HI32_LO32(ignr_hi, ignr_lo));

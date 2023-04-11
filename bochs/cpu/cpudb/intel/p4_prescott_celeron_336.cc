@@ -280,6 +280,6 @@ void p4_prescott_celeron_336_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(max_std_leaf, max_ext_leaf);
 }
 
-bx_cpuid_t *create_p4_prescott_celeron_336_cpuid(BX_CPU_C *cpu) { return new p4_prescott_celeron_336_t(cpu); }
+bx_cpuid_t *create_p4_prescott_celeron_336_cpuid(BX_CPU_C *cpu) { return new (nothrow) p4_prescott_celeron_336_t(cpu); }
 
 #endif

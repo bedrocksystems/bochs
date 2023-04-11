@@ -392,6 +392,6 @@ void turion64_tyler_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0x1, 0x80000018);
 }
 
-bx_cpuid_t *create_turion64_tyler_cpuid(BX_CPU_C *cpu) { return new turion64_tyler_t(cpu); }
+bx_cpuid_t *create_turion64_tyler_cpuid(BX_CPU_C *cpu) { return new (nothrow) turion64_tyler_t(cpu); }
 
 #endif

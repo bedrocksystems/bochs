@@ -704,6 +704,6 @@ void corei7_icelake_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(max_std_leaf, max_ext_leaf);
 }
 
-bx_cpuid_t *create_corei7_icelake_u_cpuid(BX_CPU_C *cpu) { return new corei7_icelake_t(cpu); }
+bx_cpuid_t *create_corei7_icelake_u_cpuid(BX_CPU_C *cpu) { return new (nothrow) corei7_icelake_t(cpu); }
 
 #endif

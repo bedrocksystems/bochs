@@ -4106,7 +4106,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   VMCS_CACHE *vm = &BX_CPU_THIS_PTR vmcs;
 
   // register VMX state for save/restore param tree
-  bx_list_c *vmx = new bx_list_c(parent, "VMX");
+  bx_list_c *vmx = new (nothrow) bx_list_c(parent, "VMX");
 
   BXRS_HEX_PARAM_FIELD(vmx, vmcsptr, BX_CPU_THIS_PTR vmcsptr);
   BXRS_HEX_PARAM_FIELD(vmx, vmxonptr, BX_CPU_THIS_PTR vmxonptr);
@@ -4115,13 +4115,13 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   BXRS_PARAM_BOOL(vmx, in_smm_vmx, BX_CPU_THIS_PTR in_smm_vmx);
   BXRS_PARAM_BOOL(vmx, in_smm_vmx_guest, BX_CPU_THIS_PTR in_smm_vmx_guest);
 
-  bx_list_c *vmcache = new bx_list_c(vmx, "VMCS_CACHE");
+  bx_list_c *vmcache = new (nothrow) bx_list_c(vmx, "VMCS_CACHE");
 
   //
   // VM-Execution Control Fields
   //
 
-  bx_list_c *vmexec_ctrls = new bx_list_c(vmcache, "VMEXEC_CTRLS");
+  bx_list_c *vmexec_ctrls = new (nothrow) bx_list_c(vmcache, "VMEXEC_CTRLS");
 
   BXRS_HEX_PARAM_FIELD(vmexec_ctrls, pin_vmexec_ctrls, *vm->pin_vmexec_ctrls.getref());
   BXRS_HEX_PARAM_FIELD(vmexec_ctrls, vmexec_ctrls1, *vm->vmexec_ctrls1.getref());
@@ -4193,7 +4193,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   // VM-Exit Control Fields
   //
 
-  bx_list_c *vmexit_ctrls = new bx_list_c(vmcache, "VMEXIT_CTRLS");
+  bx_list_c *vmexit_ctrls = new (nothrow) bx_list_c(vmcache, "VMEXIT_CTRLS");
 
   BXRS_HEX_PARAM_FIELD(vmexit_ctrls, vmexit_ctrls, *vm->vmexit_ctrls1.getref());
   BXRS_HEX_PARAM_FIELD(vmexit_ctrls, vmexit_ctrls2, *vm->vmexit_ctrls2.getref());
@@ -4206,7 +4206,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   // VM-Entry Control Fields
   //
 
-  bx_list_c *vmentry_ctrls = new bx_list_c(vmcache, "VMENTRY_CTRLS");
+  bx_list_c *vmentry_ctrls = new (nothrow) bx_list_c(vmcache, "VMENTRY_CTRLS");
 
   BXRS_HEX_PARAM_FIELD(vmentry_ctrls, vmentry_ctrls, *vm->vmentry_ctrls.getref());
   BXRS_DEC_PARAM_FIELD(vmentry_ctrls, vmentry_msr_load_cnt, vm->vmentry_msr_load_cnt);
@@ -4219,7 +4219,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   // VMCS Host State
   //
 
-  bx_list_c *host = new bx_list_c(vmcache, "HOST_STATE");
+  bx_list_c *host = new (nothrow) bx_list_c(vmcache, "HOST_STATE");
 
 #undef NEED_CPU_REG_SHORTCUTS
 
