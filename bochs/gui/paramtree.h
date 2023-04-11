@@ -291,12 +291,15 @@ public:
       int base = BASE_DEC,
       Bit8u highbit = 7,
       Bit8u lowbit = 0);
+#if BX_NO_HOST_FPU
+#else
   bx_shadow_num_c(bx_param_c *parent,
       const char *name,
       double *ptr_to_real_val);
   bx_shadow_num_c(bx_param_c *parent,
       const char *name,
       float *ptr_to_real_val);
+#endif
   virtual Bit64s get64();
   virtual void set(Bit64s val);
   virtual void reset();

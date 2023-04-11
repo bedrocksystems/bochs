@@ -287,13 +287,21 @@ int bx_param_num_c::parse_param(const char *ptr)
   if (ptr != NULL) {
     Bit64u value;
     if (get_base() == BASE_DOUBLE) {
+#if BX_NO_HOST_FPU
+      return -1;
+#else
       double f2value = strtod(ptr, NULL);
       memcpy(&value, &f2value, sizeof(double));
       set(value);
+#endif
     } else if (get_base() == BASE_FLOAT) {
+#if BX_NO_HOST_FPU
+      return -1;
+#else
       float f1value = (float)strtod(ptr, NULL);
       memcpy(&value, &f1value, sizeof(float));
       set(value);
+#endif
     } else if ((ptr[0] == '0') && (ptr[1] == 'x')) {
       set(strtoull(ptr, NULL, 16));
     } else {
@@ -324,13 +332,21 @@ int bx_param_num_c::dump_param(char *buf, int len, bool dquotes)
 {
   Bit64s value = get64();
   if (get_base() == BASE_DOUBLE) {
+#if BX_NO_HOST_FPU
+    return -1;
+#else
     double f2value;
     memcpy(&f2value, &value, sizeof(double));
     snprintf(buf, len, "%f", f2value);
+#endif
   } else if (get_base() == BASE_FLOAT) {
+#if BX_NO_HOST_FPU
+    return -1;
+#else
     float f1value;
     memcpy(&f1value, &value, sizeof(float));
     snprintf(buf, len, "%f", f1value);
+#endif
   } else if (get_base() == BASE_DEC) {
     if (get_min() >= BX_MIN_BIT64U) {
       if ((Bit64u) get_max() > BX_MAX_BIT32U) {
@@ -509,6 +525,8 @@ bx_shadow_num_c::bx_shadow_num_c(bx_param_c *parent,
   }
 }
 
+#if BX_NO_HOST_FPU
+#else
 // Float (floating point)
 bx_shadow_num_c::bx_shadow_num_c(bx_param_c *parent,
     const char *name,
@@ -534,6 +552,7 @@ bx_shadow_num_c::bx_shadow_num_c(bx_param_c *parent,
   val.pdouble = ptr_to_real_val;
   this->base = BASE_DOUBLE;
 }
+#endif
 
 Bit64s bx_shadow_num_c::get64()
 {
@@ -611,7 +630,7 @@ int bx_param_bool_c::parse_param(const char *ptr)
   if (ptr != NULL) {
     if (!strcmp(ptr, "0") || !stricmp(ptr, "false")) {
       set(0); return 1;
-    } 
+    }
     if (!strcmp(ptr, "1") || !stricmp(ptr, "true")) {
       set(1); return 1;
     }

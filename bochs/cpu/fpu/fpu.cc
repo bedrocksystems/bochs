@@ -532,6 +532,12 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::FPLEGACY(bxInstruction_c *i)
 
 #include <math.h>
 
+#if BX_NO_HOST_FPU
+void
+BX_CPU_C::print_state_FPU(void) {
+  fprintf(stderr, "FPU dump not supported\n");
+}
+#else
 void BX_CPU_C::print_state_FPU(void)
 {
   static double scale_factor = pow(2.0, -63.0);
@@ -610,6 +616,7 @@ void BX_CPU_C::print_state_FPU(void)
           f, fp_class[f_class]);
   }
 }
+#endif
 
 #include "softfloat-specialize.h"
 
