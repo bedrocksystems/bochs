@@ -247,6 +247,6 @@ void amd_k6_2_chomper_t::dump_cpuid(void) const
   dump_cpuid_leaf(0x8fffffff);
 }
 
-bx_cpuid_t *create_amd_k6_2_chomper_cpuid(BX_CPU_C *cpu) { return new amd_k6_2_chomper_t(cpu); }
+bx_cpuid_t *create_amd_k6_2_chomper_cpuid(BX_CPU_C *cpu) { return new (nothrow) amd_k6_2_chomper_t(cpu); }
 
 #endif

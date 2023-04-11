@@ -1392,7 +1392,7 @@ void bx_local_apic_c::register_state(bx_param_c *parent)
   unsigned i;
   char name[6];
 
-  bx_list_c *lapic = new bx_list_c(parent, "local_apic");
+  bx_list_c *lapic = new (nothrow) bx_list_c(parent, "local_apic");
 
   BXRS_HEX_PARAM_SIMPLE(lapic, base_addr);
   BXRS_HEX_PARAM_SIMPLE(lapic, apic_id);
@@ -1406,13 +1406,13 @@ void bx_local_apic_c::register_state(bx_param_c *parent)
 
   for (i=0; i<8; i++) {
     sprintf(name, "isr%u", i);
-    new bx_shadow_num_c(lapic, name, &isr[i], BASE_HEX);
+    new (nothrow) bx_shadow_num_c(lapic, name, &isr[i], BASE_HEX);
 
     sprintf(name, "tmr%u", i);
-    new bx_shadow_num_c(lapic, name, &tmr[i], BASE_HEX);
+    new (nothrow) bx_shadow_num_c(lapic, name, &tmr[i], BASE_HEX);
 
     sprintf(name, "irr%u", i);
-    new bx_shadow_num_c(lapic, name, &irr[i], BASE_HEX);
+    new (nothrow) bx_shadow_num_c(lapic, name, &irr[i], BASE_HEX);
   }
 
 #if BX_CPU_LEVEL >= 6
@@ -1420,7 +1420,7 @@ void bx_local_apic_c::register_state(bx_param_c *parent)
     BXRS_HEX_PARAM_SIMPLE(lapic, xapic_ext);
     for (i=0; i<8; i++) {
       sprintf(name, "ier%u", i);
-      new bx_shadow_num_c(lapic, name, &ier[i], BASE_HEX);
+      new (nothrow) bx_shadow_num_c(lapic, name, &ier[i], BASE_HEX);
     }
   }
 #endif
@@ -1432,7 +1432,7 @@ void bx_local_apic_c::register_state(bx_param_c *parent)
 
   for (i=0; i<APIC_LVT_ENTRIES; i++) {
     sprintf(name, "lvt%u", i);
-    new bx_shadow_num_c(lapic, name, &lvt[i], BASE_HEX);
+    new (nothrow) bx_shadow_num_c(lapic, name, &lvt[i], BASE_HEX);
   }
 
   BXRS_HEX_PARAM_SIMPLE(lapic, timer_initial);

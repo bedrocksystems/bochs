@@ -24,6 +24,8 @@
 #ifndef BX_ICACHE_H
 #define BX_ICACHE_H
 
+#include <new.hpp>
+
 extern void handleSMC(bx_phy_address pAddr, Bit32u mask);
 
 class bxPageWriteStampTable
@@ -33,7 +35,7 @@ class bxPageWriteStampTable
 
 public:
   bxPageWriteStampTable() {
-    fineGranularityMapping = new Bit32u[PHY_MEM_PAGES];
+    fineGranularityMapping = new (nothrow) Bit32u[PHY_MEM_PAGES];
     resetWriteStamps();
   }
  ~bxPageWriteStampTable() { delete [] fineGranularityMapping; }

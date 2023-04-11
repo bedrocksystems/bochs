@@ -677,6 +677,6 @@ void zambezi_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0xD, 0x1E);
 }
 
-bx_cpuid_t *create_zambezi_cpuid(BX_CPU_C *cpu) { return new zambezi_t(cpu); }
+bx_cpuid_t *create_zambezi_cpuid(BX_CPU_C *cpu) { return new (nothrow) zambezi_t(cpu); }
 
 #endif

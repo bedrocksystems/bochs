@@ -3931,7 +3931,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   if (! is_cpu_extension_supported(BX_ISA_VMX)) return;
 
   // register VMX state for save/restore param tree
-  bx_list_c *vmx = new bx_list_c(parent, "VMX");
+  bx_list_c *vmx = new (nothrow) bx_list_c(parent, "VMX");
 
   BXRS_HEX_PARAM_FIELD(vmx, vmcsptr, BX_CPU_THIS_PTR vmcsptr);
   BXRS_HEX_PARAM_FIELD(vmx, vmxonptr, BX_CPU_THIS_PTR vmxonptr);
@@ -3940,13 +3940,13 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   BXRS_PARAM_BOOL(vmx, in_smm_vmx, BX_CPU_THIS_PTR in_smm_vmx);
   BXRS_PARAM_BOOL(vmx, in_smm_vmx_guest, BX_CPU_THIS_PTR in_smm_vmx_guest);
 
-  bx_list_c *vmcache = new bx_list_c(vmx, "VMCS_CACHE");
+  bx_list_c *vmcache = new (nothrow) bx_list_c(vmx, "VMCS_CACHE");
 
   //
   // VM-Execution Control Fields
   //
 
-  bx_list_c *vmexec_ctrls = new bx_list_c(vmcache, "VMEXEC_CTRLS");
+  bx_list_c *vmexec_ctrls = new (nothrow) bx_list_c(vmcache, "VMEXEC_CTRLS");
 
   BXRS_HEX_PARAM_FIELD(vmexec_ctrls, vmexec_ctrls1, BX_CPU_THIS_PTR vmcs.vmexec_ctrls1);
   BXRS_HEX_PARAM_FIELD(vmexec_ctrls, vmexec_ctrls2, BX_CPU_THIS_PTR vmcs.vmexec_ctrls2);
@@ -4014,7 +4014,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   // VM-Exit Control Fields
   //
 
-  bx_list_c *vmexit_ctrls = new bx_list_c(vmcache, "VMEXIT_CTRLS");
+  bx_list_c *vmexit_ctrls = new (nothrow) bx_list_c(vmcache, "VMEXIT_CTRLS");
 
   BXRS_HEX_PARAM_FIELD(vmexit_ctrls, vmexit_ctrls, BX_CPU_THIS_PTR vmcs.vmexit_ctrls);
   BXRS_DEC_PARAM_FIELD(vmexit_ctrls, vmexit_msr_store_cnt, BX_CPU_THIS_PTR vmcs.vmexit_msr_store_cnt);
@@ -4026,7 +4026,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   // VM-Entry Control Fields
   //
 
-  bx_list_c *vmentry_ctrls = new bx_list_c(vmcache, "VMENTRY_CTRLS");
+  bx_list_c *vmentry_ctrls = new (nothrow) bx_list_c(vmcache, "VMENTRY_CTRLS");
    
   BXRS_HEX_PARAM_FIELD(vmentry_ctrls, vmentry_ctrls, BX_CPU_THIS_PTR vmcs.vmentry_ctrls);
   BXRS_DEC_PARAM_FIELD(vmentry_ctrls, vmentry_msr_load_cnt, BX_CPU_THIS_PTR vmcs.vmentry_msr_load_cnt);
@@ -4039,7 +4039,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   // VMCS Host State
   //
 
-  bx_list_c *host = new bx_list_c(vmcache, "HOST_STATE");
+  bx_list_c *host = new (nothrow) bx_list_c(vmcache, "HOST_STATE");
 
 #undef NEED_CPU_REG_SHORTCUTS
 

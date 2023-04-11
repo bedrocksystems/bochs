@@ -177,6 +177,6 @@ void p3_katmai_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0x3, 0);
 }
 
-bx_cpuid_t *create_p3_katmai_cpuid(BX_CPU_C *cpu) { return new p3_katmai_t(cpu); }
+bx_cpuid_t *create_p3_katmai_cpuid(BX_CPU_C *cpu) { return new (nothrow) p3_katmai_t(cpu); }
 
 #endif

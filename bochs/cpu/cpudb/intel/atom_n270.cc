@@ -519,6 +519,6 @@ void atom_n270_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0xA, 0x8);
 }
 
-bx_cpuid_t *create_atom_n270_cpuid(BX_CPU_C *cpu) { return new atom_n270_t(cpu); }
+bx_cpuid_t *create_atom_n270_cpuid(BX_CPU_C *cpu) { return new (nothrow) atom_n270_t(cpu); }
 
 #endif

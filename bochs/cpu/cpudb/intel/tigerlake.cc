@@ -864,6 +864,6 @@ void tigerlake_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0x18, 0x8);
 }
 
-bx_cpuid_t *create_tigerlake_cpuid(BX_CPU_C *cpu) { return new tigerlake_t(cpu); }
+bx_cpuid_t *create_tigerlake_cpuid(BX_CPU_C *cpu) { return new (nothrow) tigerlake_t(cpu); }
 
 #endif

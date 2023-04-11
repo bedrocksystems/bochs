@@ -1250,7 +1250,7 @@ int BX_CPU_C::load_MSRs(const char *file)
       BX_INFO(("loaded MSR[0x%03x] type=%d %08x:%08x %08x:%08x %08x:%08x", index, type,
         reset_hi, reset_lo, rsrv_hi, rsrv_lo, ignr_hi, ignr_lo));
 
-      BX_CPU_THIS_PTR msrs[index] = new MSR(index, type,
+      BX_CPU_THIS_PTR msrs[index] = new (nothrow) MSR(index, type,
         ((Bit64u)(reset_hi) << 32) | reset_lo,
         ((Bit64u) (rsrv_hi) << 32) | rsrv_lo,
         ((Bit64u) (ignr_hi) << 32) | ignr_lo);
