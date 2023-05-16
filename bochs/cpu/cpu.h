@@ -1222,7 +1222,7 @@ public: // for now...
   BX_SMF bool get_amx_ok();
 
   // for exceptions
-  static jmp_buf jmp_buf_env;
+  jmp_buf jmp_buf_env;
   unsigned last_exception_type;
 
 #if BX_SUPPORT_HANDLERS_CHAINING_SPEEDUPS
