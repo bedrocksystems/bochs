@@ -1126,7 +1126,7 @@ public: // for now...
 #endif
 
   // for exceptions
-  static jmp_buf jmp_buf_env;
+  jmp_buf jmp_buf_env;
   unsigned last_exception_type;
 
   // Boundaries of current code page, based on EIP

@@ -47,8 +47,6 @@
 
 #endif
 
-jmp_buf BX_CPU_C::jmp_buf_env;
-
 void BX_CPU_C::cpu_loop(void)
 {
 #if BX_DEBUGGER
