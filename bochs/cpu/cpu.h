@@ -1128,6 +1128,8 @@ public: // for now...
   // for exceptions
   jmp_buf jmp_buf_env;
   unsigned last_exception_type;
+  unsigned last_exception_vector;
+  Bit16u last_exception_error_code;
 
   // Boundaries of current code page, based on EIP
   bx_address eipPageBias;

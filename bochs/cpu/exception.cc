@@ -990,13 +990,16 @@ void BX_CPU_C::exception(unsigned vector, Bit16u error_code)
   }
 
   BX_CPU_THIS_PTR last_exception_type = exception_type;
+  BX_CPU_THIS_PTR last_exception_error_code = error_code;
+  BX_CPU_THIS_PTR last_exception_vector = vector;
 
   if (real_mode()) {
     push_error = 0; // not INT, no error code pushed
     error_code = 0;
   }
 
-  interrupt(vector, BX_HARDWARE_EXCEPTION, push_error, error_code);
+  // Handled by the VMM
+  // interrupt(vector, BX_HARDWARE_EXCEPTION, push_error, error_code);
 
   BX_CPU_THIS_PTR last_exception_type = 0; // error resolved
 
