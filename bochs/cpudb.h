@@ -54,6 +54,8 @@ bx_define_cpudb(corei3_cnl)
 bx_define_cpudb(corei7_icelake_u)
 bx_define_cpudb(tigerlake)
 bx_define_cpudb(sapphire_rapids)
+
+bx_define_cpudb(bhv_cpu_core)  //This must be the last cpu entry i.e (BX_CPUDB_MODEL_LAST - 1)
 #endif
 #endif
 #endif
