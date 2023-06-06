@@ -1226,6 +1226,7 @@ public: // for now...
   unsigned last_exception_type;
   unsigned last_exception_vector;
   Bit16u last_exception_error_code;
+  bool last_exception_push_error_code;
 
 #if BX_SUPPORT_HANDLERS_CHAINING_SPEEDUPS
   const volatile Bit8u *cpuloop_stack_anchor = NULL;

@@ -1042,6 +1042,7 @@ void BX_CPU_C::exception(unsigned vector, Bit16u error_code)
 
   BX_CPU_THIS_PTR last_exception_type = exception_type;
   BX_CPU_THIS_PTR last_exception_error_code = error_code;
+  BX_CPU_THIS_PTR last_exception_push_error_code = push_error;
   BX_CPU_THIS_PTR last_exception_vector = vector;
 
   // Handled by the VMM
