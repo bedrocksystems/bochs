@@ -1130,6 +1130,7 @@ public: // for now...
   unsigned last_exception_type;
   unsigned last_exception_vector;
   Bit16u last_exception_error_code;
+  bool last_exception_push_error_code;
 
   // Boundaries of current code page, based on EIP
   bx_address eipPageBias;
