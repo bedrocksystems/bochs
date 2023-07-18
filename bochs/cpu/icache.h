@@ -34,7 +34,7 @@ class bxPageWriteStampTable
   Bit32u *fineGranularityMapping;
 
 public:
-  bxPageWriteStampTable(): PHY_MEM_PAGES_IN_4G_SPACE(1024*1024) {
+  bxPageWriteStampTable(): PHY_MEM_PAGES_IN_4G_SPACE(1) {
     fineGranularityMapping = new (nothrow) Bit32u[PHY_MEM_PAGES_IN_4G_SPACE];
     resetWriteStamps();
   }
@@ -42,7 +42,8 @@ public:
 
   BX_CPP_INLINE static Bit32u hash(bx_phy_address pAddr) {
     // can share writeStamps between multiple pages if >32 bit phy address
-    return ((Bit32u) pAddr) >> 12;
+    // return ((Bit32u) pAddr) >> 12;
+    return 0;
   }
 
   BX_CPP_INLINE Bit32u getFineGranularityMapping(bx_phy_address pAddr) const
