@@ -30,7 +30,7 @@ extern void handleSMC(bx_phy_address pAddr, Bit32u mask);
 
 class bxPageWriteStampTable
 {
-  const Bit32u PHY_MEM_PAGES = 1024*1024;
+  const Bit32u PHY_MEM_PAGES = 1;
   Bit32u *fineGranularityMapping;
 
 public:
@@ -42,7 +42,8 @@ public:
 
   BX_CPP_INLINE static Bit32u hash(bx_phy_address pAddr) {
     // can share writeStamps between multiple pages if >32 bit phy address
-    return ((Bit32u) pAddr) >> 12;
+    // return ((Bit32u) pAddr) >> 12;
+    return 0;
   }
 
   BX_CPP_INLINE Bit32u getFineGranularityMapping(bx_phy_address pAddr) const
