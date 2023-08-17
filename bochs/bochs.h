@@ -317,7 +317,7 @@ BOCHSAPI extern bx_debug_t bx_dbg;
   #define BX_SMP_PROCESSORS 1
 #endif
 
-BOCHSAPI extern Bit8u bx_cpu_count;
+BOCHSAPI extern Bit16u bx_cpu_count;
 #if BX_SUPPORT_APIC
 // determinted by XAPIC option
 BOCHSAPI extern Bit32u apic_id_mask;
