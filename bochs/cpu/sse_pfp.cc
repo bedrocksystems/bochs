@@ -54,6 +54,8 @@ float_status_t mxcsr_to_softfloat_status_word(bx_mxcsr_t mxcsr)
 {
   float_status_t status;
 
+  // Ignored in that mode - instead there is a precision exception flag
+  status.float_rounding_precision = 0;
   status.float_exception_flags = 0; // clear exceptions before execution
   status.float_nan_handling_mode = float_first_operand_nan;
   status.float_rounding_mode = mxcsr.get_rounding_mode();
@@ -818,7 +820,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::UCOMISS_VssWssR(bxInstruction_c *i)
  * Compare two double precision FP numbers and set EFLAGS accordintly.
  * Possible floating point exceptions: #I, #D
  */
-void BX_CPP_AttrRegparmN(1) BX_CPU_C::UCOMISD_VsdWsdR(bxInstruction_c *i)            	
+void BX_CPP_AttrRegparmN(1) BX_CPU_C::UCOMISD_VsdWsdR(bxInstruction_c *i)
 {
 #if BX_CPU_LEVEL >= 6
   float64 op1 = BX_READ_XMM_REG_LO_QWORD(i->dst()), op2 = BX_READ_XMM_REG_LO_QWORD(i->src());
