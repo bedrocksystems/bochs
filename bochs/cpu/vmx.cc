@@ -4107,6 +4107,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
 
   // register VMX state for save/restore param tree
   bx_list_c *vmx = new (nothrow) bx_list_c(parent, "VMX");
+  ABORT_FALSE(vmx);
 
   BXRS_HEX_PARAM_FIELD(vmx, vmcsptr, BX_CPU_THIS_PTR vmcsptr);
   BXRS_HEX_PARAM_FIELD(vmx, vmxonptr, BX_CPU_THIS_PTR vmxonptr);
@@ -4116,12 +4117,14 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   BXRS_PARAM_BOOL(vmx, in_smm_vmx_guest, BX_CPU_THIS_PTR in_smm_vmx_guest);
 
   bx_list_c *vmcache = new (nothrow) bx_list_c(vmx, "VMCS_CACHE");
+  ABORT_FALSE(vmcache);
 
   //
   // VM-Execution Control Fields
   //
 
   bx_list_c *vmexec_ctrls = new (nothrow) bx_list_c(vmcache, "VMEXEC_CTRLS");
+  ABORT_FALSE(vmexec_ctrls);
 
   BXRS_HEX_PARAM_FIELD(vmexec_ctrls, pin_vmexec_ctrls, *vm->pin_vmexec_ctrls.getref());
   BXRS_HEX_PARAM_FIELD(vmexec_ctrls, vmexec_ctrls1, *vm->vmexec_ctrls1.getref());
@@ -4194,6 +4197,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   //
 
   bx_list_c *vmexit_ctrls = new (nothrow) bx_list_c(vmcache, "VMEXIT_CTRLS");
+  ABORT_FALSE(vmexit_ctrls);
 
   BXRS_HEX_PARAM_FIELD(vmexit_ctrls, vmexit_ctrls, *vm->vmexit_ctrls1.getref());
   BXRS_HEX_PARAM_FIELD(vmexit_ctrls, vmexit_ctrls2, *vm->vmexit_ctrls2.getref());
@@ -4207,6 +4211,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   //
 
   bx_list_c *vmentry_ctrls = new (nothrow) bx_list_c(vmcache, "VMENTRY_CTRLS");
+  ABORT_FALSE(vmentry_ctrls);
 
   BXRS_HEX_PARAM_FIELD(vmentry_ctrls, vmentry_ctrls, *vm->vmentry_ctrls.getref());
   BXRS_DEC_PARAM_FIELD(vmentry_ctrls, vmentry_msr_load_cnt, vm->vmentry_msr_load_cnt);
@@ -4220,6 +4225,7 @@ void BX_CPU_C::register_vmx_state(bx_param_c *parent)
   //
 
   bx_list_c *host = new (nothrow) bx_list_c(vmcache, "HOST_STATE");
+  ABORT_FALSE(host);
 
 #undef NEED_CPU_REG_SHORTCUTS
 

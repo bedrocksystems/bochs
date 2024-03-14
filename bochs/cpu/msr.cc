@@ -1582,6 +1582,7 @@ int BX_CPU_C::load_MSRs(const char *file)
         GET64_FROM_HI32_LO32(reset_hi, reset_lo),
         GET64_FROM_HI32_LO32(rsrv_hi, rsrv_lo),
         GET64_FROM_HI32_LO32(ignr_hi, ignr_lo));
+      ABORT_FALSE(BX_CPU_THIS_PTR msrs[index]);
     }
   } while (!feof(fd));
 

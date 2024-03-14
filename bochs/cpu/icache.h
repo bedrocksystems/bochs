@@ -36,6 +36,7 @@ class bxPageWriteStampTable
 public:
   bxPageWriteStampTable(): PHY_MEM_PAGES_IN_4G_SPACE(1) {
     fineGranularityMapping = new (nothrow) Bit32u[PHY_MEM_PAGES_IN_4G_SPACE];
+    ABORT_FALSE(fineGranularityMapping);
     resetWriteStamps();
   }
  ~bxPageWriteStampTable() { delete [] fineGranularityMapping; }

@@ -692,6 +692,11 @@ void ryzen_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0xD, 0x8000001F);
 }
 
-bx_cpuid_t *create_ryzen_cpuid(BX_CPU_C *cpu) { return new (nothrow) ryzen_t(cpu); }
+bx_cpuid_t *create_ryzen_cpuid(BX_CPU_C *cpu)
+{
+  bx_cpuid_t *p = new (nothrow) ryzen_t(cpu);
+  ABORT_FALSE(p);
+  return p;
+}
 
 #endif

@@ -1257,6 +1257,7 @@ void BX_CPU_C::register_svm_state(bx_param_c *parent)
 
   // register SVM state for save/restore param tree
   bx_list_c *svm = new (nothrow) bx_list_c(parent, "SVM");
+  ABORT_FALSE(svm);
 
   BXRS_HEX_PARAM_FIELD(svm, vmcbptr, BX_CPU_THIS_PTR vmcbptr);
   BXRS_PARAM_BOOL(svm, in_svm_guest, BX_CPU_THIS_PTR in_svm_guest);
@@ -1267,6 +1268,7 @@ void BX_CPU_C::register_svm_state(bx_param_c *parent)
   //
 
   bx_list_c *vmcb_ctrls = new (nothrow) bx_list_c(svm, "VMCB_CTRLS");
+  ABORT_FALSE(vmcb_ctrls);
 
   BXRS_HEX_PARAM_FIELD(vmcb_ctrls, cr_rd_ctrl, BX_CPU_THIS_PTR vmcb->ctrls.cr_rd_ctrl);
   BXRS_HEX_PARAM_FIELD(vmcb_ctrls, cr_wr_ctrl, BX_CPU_THIS_PTR vmcb->ctrls.cr_wr_ctrl);
@@ -1294,10 +1296,12 @@ void BX_CPU_C::register_svm_state(bx_param_c *parent)
   //
 
   bx_list_c *host = new (nothrow) bx_list_c(svm, "VMCB_HOST_STATE");
+  ABORT_FALSE(host);
 
   for(unsigned n=0; n<4; n++) {
     bx_segment_reg_t *segment = &BX_CPU_THIS_PTR vmcb->host_state.sregs[n];
     bx_list_c *sreg = new (nothrow) bx_list_c(host, segname[n]);
+    ABORT_FALSE(sreg);
     BXRS_HEX_PARAM_FIELD(sreg, selector, segment->selector.value);
     BXRS_HEX_PARAM_FIELD(sreg, valid, segment->cache.valid);
     BXRS_PARAM_BOOL(sreg, p, segment->cache.p);
@@ -1315,10 +1319,12 @@ void BX_CPU_C::register_svm_state(bx_param_c *parent)
   }
 
   bx_list_c *GDTR = new (nothrow) bx_list_c(host, "GDTR");
+  ABORT_FALSE(GDTR);
   BXRS_HEX_PARAM_FIELD(GDTR, base, BX_CPU_THIS_PTR vmcb->host_state.gdtr.base);
   BXRS_HEX_PARAM_FIELD(GDTR, limit, BX_CPU_THIS_PTR vmcb->host_state.gdtr.limit);
 
   bx_list_c *IDTR = new (nothrow) bx_list_c(host, "IDTR");
+  ABORT_FALSE(IDTR);
   BXRS_HEX_PARAM_FIELD(IDTR, base, BX_CPU_THIS_PTR vmcb->host_state.idtr.base);
   BXRS_HEX_PARAM_FIELD(IDTR, limit, BX_CPU_THIS_PTR vmcb->host_state.idtr.limit);
 

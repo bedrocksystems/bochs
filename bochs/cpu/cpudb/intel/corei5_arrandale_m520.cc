@@ -515,6 +515,11 @@ void corei5_arrandale_m520_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(max_std_leaf, max_ext_leaf);
 }
 
-bx_cpuid_t *create_corei5_arrandale_m520_cpuid(BX_CPU_C *cpu) { return new (nothrow) corei5_arrandale_m520_t(cpu); }
+bx_cpuid_t *create_corei5_arrandale_m520_cpuid(BX_CPU_C *cpu)
+{
+  bx_cpuid_t *p = new (nothrow) corei5_arrandale_m520_t(cpu);
+  ABORT_FALSE(p);
+  return p;
+}
 
 #endif
