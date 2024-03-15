@@ -1254,6 +1254,7 @@ int BX_CPU_C::load_MSRs(const char *file)
         ((Bit64u)(reset_hi) << 32) | reset_lo,
         ((Bit64u) (rsrv_hi) << 32) | rsrv_lo,
         ((Bit64u) (ignr_hi) << 32) | ignr_lo);
+      ABORT_FALSE(BX_CPU_THIS_PTR msrs[index]);
     }
   } while (!feof(fd));
 

@@ -624,6 +624,11 @@ void corei7_sandy_bridge_2600k_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(0xD, 0x8);
 }
 
-bx_cpuid_t *create_corei7_sandy_bridge_2600k_cpuid(BX_CPU_C *cpu) { return new (nothrow) corei7_sandy_bridge_2600k_t(cpu); }
+bx_cpuid_t *create_corei7_sandy_bridge_2600k_cpuid(BX_CPU_C *cpu)
+{
+  bx_cpuid_t *p = new (nothrow) corei7_sandy_bridge_2600k_t(cpu);
+  ABORT_FALSE(p);
+  return p;
+}
 
 #endif

@@ -45,6 +45,7 @@ bx_param_c::bx_param_c(Bit32u id, const char *param_name, const char *param_desc
 {
   set_type(BXT_PARAM);
   this->name = new (nothrow) char[strlen(param_name)+1];
+  ABORT_FALSE(this->name);
   strcpy(this->name, param_name);
   set_description(param_desc);
   this->text_format = default_text_format;
@@ -67,6 +68,7 @@ bx_param_c::bx_param_c(Bit32u id, const char *param_name, const char *param_labe
 {
   set_type(BXT_PARAM);
   this->name = new (nothrow) char[strlen(param_name)+1];
+  ABORT_FALSE(this->name);
   strcpy(this->name, param_name);
   set_description(param_desc);
   set_label(param_label);
@@ -95,6 +97,7 @@ void bx_param_c::set_description(const char *text)
   delete [] this->description;
   if (text) {
     this->description = new (nothrow) char[strlen(text)+1];
+    ABORT_FALSE(this->description);
     strcpy(this->description, text);
   } else {
     this->description = NULL;
@@ -106,6 +109,7 @@ void bx_param_c::set_label(const char *text)
   delete [] label;
   if (text) {
     label = new (nothrow) char[strlen(text)+1];
+    ABORT_FALSE(label);
     strcpy(label, text);
   } else {
     label = NULL;
@@ -117,6 +121,7 @@ void bx_param_c::set_ask_format(const char *format)
   delete [] ask_format;
   if (format) {
     ask_format = new (nothrow) char[strlen(format)+1];
+    ABORT_FALSE(ask_format);
     strcpy(ask_format, format);
   } else {
     ask_format = NULL;
@@ -128,6 +133,7 @@ void bx_param_c::set_group(const char *group)
   delete [] group_name;
   if (group) {
     group_name = new (nothrow) char[strlen(group)+1];
+    ABORT_FALSE(group_name);
     strcpy(group_name, group);
   } else {
     group_name = NULL;
@@ -743,6 +749,7 @@ void bx_param_enum_c::set_dependent_list(bx_list_c *l, bool enable_all)
 {
   dependent_list = l;
   deps_bitmap = new (nothrow) Bit64u[(unsigned)(max - min + 1)];
+  ABORT_FALSE(deps_bitmap);
   for (int i=0; i<(max-min+1); i++) {
     if (enable_all) {
       deps_bitmap[i] = (1 << (l->get_size())) - 1;
@@ -830,7 +837,9 @@ bx_param_string_c::bx_param_string_c(bx_param_c *parent,
     initial_val_size = maxsize;
   }
   this->val = new (nothrow) char[maxsize];
+  ABORT_FALSE(this->val);
   this->initial_val = new (nothrow) char[maxsize];
+  ABORT_FALSE(this->initial_val);
   this->handler = NULL;
   this->enable_handler = NULL;
   this->maxsize = maxsize;
@@ -910,6 +919,7 @@ Bit32s bx_param_string_c::get(char *buf, int len)
 void bx_param_string_c::set(const char *buf)
 {
   char *oldval = new (nothrow) char[maxsize];
+  ABORT_FALSE(oldval);
 
   strncpy(oldval, val, maxsize);
   oldval[maxsize - 1] = 0;
@@ -966,7 +976,7 @@ int bx_param_string_c::dump_param(char *buf, int len, bool dquotes)
       snprintf(buf, len, "%s", val);
     }
   } else {
-    strcpy(buf, "none");
+    snprintf(buf, len, "%s", val);
   }
   return strlen(buf);
 }
@@ -985,6 +995,7 @@ Bit32s bx_param_bytestring_c::get(char *buf, int len)
 void bx_param_bytestring_c::set(const char *buf)
 {
   char *oldval = new (nothrow) char[maxsize];
+  ABORT_FALSE(oldval);
 
   memcpy(oldval, val, maxsize);
   if (handler) {
@@ -1214,9 +1225,11 @@ void bx_list_c::init(const char *list_title)
 {
   if (list_title) {
     this->title = new (nothrow) char[strlen(list_title)+1];
+    ABORT_FALSE(this->title);
     strcpy(this->title, list_title);
   } else {
     this->title = new (nothrow) char[1];
+    ABORT_FALSE(this->title);
     this->title[0] = 0;
   }
   this->options = 0;
@@ -1242,6 +1255,7 @@ void bx_list_c::set_parent(bx_param_c *newparent)
 bx_list_c* bx_list_c::clone()
 {
   bx_list_c *newlist = new (nothrow) bx_list_c(NULL, name, title);
+  ABORT_FALSE(newlist);
   for (int i=0; i<get_size(); i++)
     newlist->add(get(i));
   newlist->set_options(options);
@@ -1255,6 +1269,7 @@ void bx_list_c::add(bx_param_c *param)
     return;
   }
   bx_listitem_t *item = new (nothrow) bx_listitem_t;
+  ABORT_FALSE(item);
   item->param = param;
   item->next = NULL;
   if (list == NULL) {

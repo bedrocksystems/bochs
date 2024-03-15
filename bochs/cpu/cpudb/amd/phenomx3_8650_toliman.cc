@@ -551,6 +551,11 @@ void phenom_8650_toliman_t::dump_cpuid(void) const
   bx_cpuid_t::dump_cpuid(BX_SUPPORT_MONITOR_MWAIT ? 0x5 : 0x1, 0x1A);
 }
 
-bx_cpuid_t *create_phenom_8650_toliman_cpuid(BX_CPU_C *cpu) { return new (nothrow) phenom_8650_toliman_t(cpu); }
+bx_cpuid_t *create_phenom_8650_toliman_cpuid(BX_CPU_C *cpu)
+{
+  bx_cpuid_t *p = new (nothrow) phenom_8650_toliman_t(cpu);
+  ABORT_FALSE(p);
+  return p;
+}
 
 #endif

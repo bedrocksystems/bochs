@@ -34,6 +34,9 @@
 // upon any use of a non-throwing non-placement `new`.
 #include <new.hpp>
 
+// Runtime assertion.
+#define ABORT_FALSE(expr) do { if (__UNLIKELY__(!(expr))) { cxx::abort(); } } while (0)
+
 #ifndef __QNXNTO__
 extern "C" {
 #endif
@@ -163,6 +166,7 @@ void print_statistics_tree(bx_param_c *node, int level = 0);
 #define BXRS_PARAM_SPECIAL(parent, name, maxvalue, save_handler, restore_handler) \
 { \
   bx_param_num_c *param = new (nothrow) bx_param_num_c(parent, #name, "", "", 0, maxvalue, 0); \
+  ABORT_FALSE(param); \
   param->set_base(BASE_HEX); \
   param->set_sr_handlers(this, save_handler, restore_handler); \
 }
@@ -176,23 +180,40 @@ void print_statistics_tree(bx_param_c *node, int level = 0);
 #define BXRS_PARAM_SPECIAL8(parent, name, save_handler, restore_handler) \
   BXRS_PARAM_SPECIAL(parent, name, BX_MAX_BIT8U,  save_handler, restore_handler)
 
+
+template <typename T>
+static inline auto bxrs_param_simple(bx_param_c* parent, char * name_str, T* name, int n)
+{
+  auto *p = new (nothrow) bx_shadow_num_c(parent, name_str, name, n);
+  ABORT_FALSE(p);
+  return p;
+}
+
+template <typename T>
+static inline auto bxrs_param_bool(bx_param_c* parent, char * name_str, T* name)
+{
+  auto *p = new (nothrow) bx_shadow_bool_c(parent, name_str, name);
+  ABORT_FALSE(p);
+  return p;
+}
+
 #define BXRS_HEX_PARAM_SIMPLE32(parent, name) \
-  new (nothrow) bx_shadow_num_c(parent, #name, (Bit32u*)&(name), BASE_HEX)
+  bxrs_param_simple(parent, #name, (Bit32u*)&(name), BASE_HEX)
 #define BXRS_HEX_PARAM_SIMPLE64(parent, name) \
-  new (nothrow) bx_shadow_num_c(parent, #name, (Bit64u*)&(name), BASE_HEX)
+  bxrs_param_simple(parent, #name, (Bit64u*)&(name), BASE_HEX)
 
 #define BXRS_HEX_PARAM_SIMPLE(parent, name) \
-  new (nothrow) bx_shadow_num_c(parent, #name, &(name), BASE_HEX)
+  bxrs_param_simple(parent, #name, &(name), BASE_HEX)
 #define BXRS_HEX_PARAM_FIELD(parent, name, field) \
-  new (nothrow) bx_shadow_num_c(parent, #name, &(field), BASE_HEX)
+  bxrs_param_simple(parent, #name, &(field), BASE_HEX)
 
 #define BXRS_DEC_PARAM_SIMPLE(parent, name) \
-  new (nothrow) bx_shadow_num_c(parent, #name, &(name), BASE_DEC)
+  bxrs_param_simple(parent, #name, &(name), BASE_DEC)
 #define BXRS_DEC_PARAM_FIELD(parent, name, field) \
-  new (nothrow) bx_shadow_num_c(parent, #name, &(field), BASE_DEC)
+  bxrs_param_simple(parent, #name, &(field), BASE_DEC)
 
 #define BXRS_PARAM_BOOL(parent, name, field) \
-  new (nothrow) bx_shadow_bool_c(parent, #name, &(field))
+  bxrs_param_bool(parent, #name, &(field))
 
 // =-=-=-=-=-=-=- Normal optimized use -=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #define BX_INP(addr, len)           bx_devices.inp(addr, len)
