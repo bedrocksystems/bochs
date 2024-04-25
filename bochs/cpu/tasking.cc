@@ -243,7 +243,10 @@ void BX_CPU_C::task_switch(bxInstruction_c *i, bx_selector_t *tss_selector,
   if (source == BX_TASK_FROM_JUMP || source == BX_TASK_FROM_IRET) {
     // Bit is cleared
     Bit32u laddr = (Bit32u) BX_CPU_THIS_PTR gdtr.base + (BX_CPU_THIS_PTR tr.selector.index<<3) + 4;
-    access_read_linear(laddr, 4, 0, BX_RW, 0x0, &temp32);
+
+    if (access_read_linear(laddr, 4, 0, BX_RW, 0x0, &temp32) < 0)
+      exception(BX_GP_EXCEPTION, 0);
+
     temp32 &= ~0x200;
     access_write_linear(laddr, 4, 0, BX_WRITE, 0x0, &temp32);
   }
@@ -417,7 +420,9 @@ void BX_CPU_C::task_switch(bxInstruction_c *i, bx_selector_t *tss_selector,
   {
     // set the new task's busy bit, should be done atomiclly using RMW
     Bit32u laddr = (Bit32u)(BX_CPU_THIS_PTR gdtr.base) + (tss_selector->index<<3) + 4;
-    access_read_linear(laddr, 4, 0, BX_RW, 0x0, &dword2);
+    if (access_read_linear(laddr, 4, 0, BX_RW, 0x0, &dword2) < 0)
+      exception(BX_GP_EXCEPTION, 0);
+
     dword2 |= 0x200;
     access_write_linear(laddr, 4, 0, BX_WRITE, 0x0, &dword2);
   }
