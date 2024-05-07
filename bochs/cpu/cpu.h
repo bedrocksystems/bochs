@@ -4656,7 +4656,6 @@ public: // for now...
   BX_SMF void    Process_UINTR_Notification();
 #endif
   BX_SMF void    debug(bx_address offset);
-  BX_SMF void    debug_disasm_instruction(bx_address offset);
 
 #if BX_X86_DEBUGGER
   // x86 hardware debug support

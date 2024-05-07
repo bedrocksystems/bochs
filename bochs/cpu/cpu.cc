@@ -130,11 +130,6 @@ void BX_CPU_C::cpu_loop(void)
 
     for(;;) {
 
-#if BX_DEBUGGER
-      if (BX_CPU_THIS_PTR trace)
-        debug_disasm_instruction(BX_CPU_THIS_PTR prev_rip);
-#endif
-
       // want to allow changing of the instruction inside instrumentation callback
       BX_INSTR_BEFORE_EXECUTION(BX_CPU_ID, i);
       RIP += i->ilen();
