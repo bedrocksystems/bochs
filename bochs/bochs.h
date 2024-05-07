@@ -186,7 +186,7 @@ void print_statistics_tree(bx_param_c *node, int level = 0);
 
 
 template <typename T>
-static inline auto bxrs_param_simple(bx_param_c* parent, char * name_str, T* name, int n)
+static inline auto bxrs_param_simple(bx_param_c* parent, const char * name_str, T* name, int n)
 {
   auto *p = new (nothrow) bx_shadow_num_c(parent, name_str, name, n);
   ABORT_FALSE(p);
@@ -194,7 +194,7 @@ static inline auto bxrs_param_simple(bx_param_c* parent, char * name_str, T* nam
 }
 
 template <typename T>
-static inline auto bxrs_param_bool(bx_param_c* parent, char * name_str, T* name)
+static inline auto bxrs_param_bool(bx_param_c* parent, const char * name_str, T* name)
 {
   auto *p = new (nothrow) bx_shadow_bool_c(parent, name_str, name);
   ABORT_FALSE(p);
