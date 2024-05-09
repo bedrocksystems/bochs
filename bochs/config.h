@@ -471,6 +471,8 @@
 #define GET32L(val64) ((Bit32u)(((Bit64u)(val64)) & 0xFFFFFFFF))
 #define GET32H(val64) ((Bit32u)(((Bit64u)(val64)) >> 32))
 
+#define GET64_FROM_HI32_LO32(hi, lo) (Bit64u(lo) | (Bit64u(hi) << 32))
+
 // now that Bit32u and Bit64u exist, defined bx_address
 #if BX_SUPPORT_X86_64
 typedef Bit64u bx_address;
@@ -505,10 +507,6 @@ typedef Bit32u bx_phy_address;
     #error "BX_PHY_ADDRESS_LONG implies emulated physical address width > 32 bit"
   #endif
 #endif
-
-#define BX_PHY_ADDRESS_MASK ((((Bit64u)(1)) << BX_PHY_ADDRESS_WIDTH) - 1)
-
-#define BX_PHY_ADDRESS_RESERVED_BITS (~BX_PHY_ADDRESS_MASK)
 
 // technically, in an 8 bit signed the real minimum is -128, not -127.
 // But if you decide to negate -128 you tend to get -128 again, so it's
