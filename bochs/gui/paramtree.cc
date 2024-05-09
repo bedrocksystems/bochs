@@ -126,7 +126,8 @@ void bx_param_c::set_format(const char *format)
 {
   delete [] text_format;
   if (format) {
-    text_format = new char[strlen(format)+1];
+    text_format = new (nothrow) char[strlen(format)+1];
+    ABORT_FALSE(text_format);
     strcpy(text_format, format);
   } else {
     text_format = NULL;
@@ -137,7 +138,8 @@ void bx_param_c::set_long_format(const char *format)
 {
   delete [] long_text_format;
   if (format) {
-    long_text_format = new char[strlen(format)+1];
+    long_text_format = new (nothrow) char[strlen(format)+1];
+    ABORT_FALSE(long_text_format);
     strcpy(long_text_format, format);
   } else {
     long_text_format = NULL;

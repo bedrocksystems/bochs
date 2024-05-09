@@ -57,7 +57,8 @@ BX_CPU_C::BX_CPU_C(unsigned id): bx_cpuid(id)
   put(logname, name);
 
 #if BX_SUPPORT_APIC
-  lapic = new bx_local_apic_c(this, bx_cpuid);
+  lapic = new (nothrow) bx_local_apic_c(this, bx_cpuid);
+  ABORT_FALSE(lapic);
 #endif
 
   for (unsigned n=0;n<BX_ISA_EXTENSIONS_ARRAY_SIZE;n++)

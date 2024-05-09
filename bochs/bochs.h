@@ -112,6 +112,7 @@ extern "C" {
 
 #include "osdep.h"       /* platform dependent includes and defines */
 
+#include "gui/paramtree.h"
 class bx_param_c;
 class bx_list_c;
 
