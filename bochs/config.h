@@ -730,7 +730,7 @@ typedef Bit32u bx_phy_address;
 #define BX_HAVE_SETENV 0
 #define BX_HAVE_SELECT 0
 #define BX_HAVE_SNPRINTF 1
-#define BX_HAVE_VSNPRINTF 0
+#define BX_HAVE_VSNPRINTF 1
 #define BX_HAVE_STRTOULL 1
 #define BX_HAVE_STRTOUQ 0
 #define BX_HAVE_STRDUP 1
