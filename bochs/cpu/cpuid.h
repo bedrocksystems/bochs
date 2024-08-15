@@ -73,6 +73,7 @@ public:
   void dump_features() const;
 
 #if BX_CPU_LEVEL >= 5
+  virtual bool external_msrs() const { return false; }
   virtual int rdmsr(Bit32u index, Bit64u *msr) { return -1; }
   virtual int wrmsr(Bit32u index, Bit64u  msr) { return -1; }
 #endif

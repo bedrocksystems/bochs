@@ -43,6 +43,9 @@ extern bool is_invalid_cet_control(bx_address val);
 #if BX_CPU_LEVEL >= 5
 bool BX_CPP_AttrRegparmN(2) BX_CPU_C::rdmsr(Bit32u index, Bit64u *msr)
 {
+  if (cpuid->external_msrs())
+    return handle_unknown_rdmsr(index, msr); // Let the cpuid object handle all MSRs
+
   Bit64u val64 = 0;
 
 #if BX_SUPPORT_VMX >= 2
@@ -666,6 +669,9 @@ bool isValidMSR_FixedMTRR(Bit64u fixed_mtrr_val)
 #if BX_CPU_LEVEL >= 5
 bool BX_CPP_AttrRegparmN(2) BX_CPU_C::wrmsr(Bit32u index, Bit64u val_64)
 {
+  if (cpuid->external_msrs())
+    return handle_unknown_wrmsr(index, val_64); // Let the cpuid object handle all MSRs
+
   Bit32u val32_lo = GET32L(val_64);
   Bit32u val32_hi = GET32H(val_64);
 
@@ -1419,7 +1425,7 @@ void BX_CPP_AttrRegparmN(1) BX_CPU_C::WRMSR(bxInstruction_c *i)
 
 #if BX_SUPPORT_X86_64
 
-#include "scalar_arith.h" 
+#include "scalar_arith.h"
 
 void BX_CPP_AttrRegparmN(1) BX_CPU_C::RDMSRLIST(bxInstruction_c *i)
 {
